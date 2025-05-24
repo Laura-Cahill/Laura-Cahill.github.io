@@ -1,0 +1,41 @@
+
+/*Background color and centering content*/
+body {
+    background-color: lavenderblush;
+    text-align: center;
+  }
+  /*a bunch of color changes*/
+  hr {
+    border-top: 1px solid #ce9bd1;
+  }
+  h1 {
+    color: indigo;
+  }
+  p {
+    color: rebeccapurple;
+  }
+  a {
+    color: mediumvioletred;
+  }
+
+  th {
+    background-color: #debbff;
+    color: rgb(47, 7, 40);
+  }
+  
+   /*table styling*/
+  th, td {
+    padding: 15px;
+    border-bottom: 1px solid #debbff;
+    text-align: center;
+  }
+  tr:nth-child(even) {background-color: #feedfb;}
+  
+
+  table {
+    border-collapse: collapse;
+    width: 60%;
+    margin-left: auto; 
+    margin-right: auto;
+    text-align: center;
+  }
