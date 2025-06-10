@@ -1,0 +1,63 @@
+<!--
+File: hw3.html
+GUI Assignment: Creating an Interactive Dynamic Table
+Laura Cahill, UMass Lowell Computer Science, laura_cahill@student.uml.edu
+Copyright (c) 2025 by Laura. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by LC on June 10, 2025 at 4:40 PM
+
+This page can be used to dynamically create a multiplication table from
+user inputed access bounds.
+
+Sources used:
+https://www.w3schools.com/html/html_forms.asp
+https://www.w3schools.com/tags/att_input_type_number.asp
+https://www.w3schools.com/js/js_htmldom_html.asp
+https://www.w3schools.com/jsref/met_table_insertrow.asp
+https://www.w3schools.com/css/css_table_style.asp
+
+-->
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <title>Multiplication Table</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"> </script>
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <h1>Please Enter Multiplication Table Values</h1>
+  <!--  Form html is under here, calls validateForm() upon user hitting 
+    the button. h1 and h2 control the horizontal axis and v1 and
+    v2 control the vertical axis -->
+    <form name="myForm" onsubmit="return validateForm()" method="post">
+      <label for="h1">Minimum column number (between -50 and 50):</label> 
+      <input type="number" id="h1" name="h1" min="-50" max="50"> <br>
+
+      <label for="h2">Maximum column number (between -50 and 50):</label> 
+      <input type="number" id="h2" name="h2"  min="-50" max="50"> <br>
+
+      <label for="v1">Minimum row number (between -50 and 50):</label> 
+      <input type="number" id="v1" name="v1"  min="-50" max="50"> <br>
+
+      <label for="v2">Maximum row number (between -50 and 50):</label> 
+      <input type="number" id="v2" name="v2"  min="-50" max="50"> <br>
+
+      <input type="submit">
+    </form> 
+
+    <!-- this empty paragraph changes if a user doesn't enter a number. -->
+    <p id = "p1"></p>
+  
+    <!-- this empty table changes to be a multiplication table of whatever
+     the user entered.-->
+    <table id = "table">
+
+    </table>
+  </body>
+</html>
