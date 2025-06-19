@@ -1,0 +1,100 @@
+/*
+File: style.css
+GUI Assignment: Creating an Interactive Dynamic Table
+Laura Cahill, UMass Lowell Computer Science, laura_cahill@student.uml.edu
+Copyright (c) 2025 by Laura. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by LC on June 19, 2025 at 2:37 PM
+
+This page can be used to dynamically create a multiplication table from
+user inputed access bounds.
+
+Sources used:
+https://www.w3schools.com/css/css_table_style.asp
+
+*/
+body {
+    background-color: rgb(244, 240, 255);
+}
+
+input[type=number] {
+    width: 100px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+/*table styling*/
+
+table  {
+    color: rgb(0, 0, 0);
+    background-color: rgb(216, 216, 247);
+    border: 1px solid #594f82;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #6b6097;
+  }
+tr:nth-child(even) {background-color: #f4efef;}
+
+tr:nth-child(1) {
+    background-color: #2e1f6b;
+    color: white;
+}
+
+td:nth-child(1) {
+    background-color: #2e1f6b;
+    color: white;
+}
+#mainTable {
+    margin-left: auto; 
+    margin-right: auto;
+    width: 50%;
+    height: 300px;
+    float: left;
+    background-color: #2e1f6b;
+    overflow: scroll;
+}
+
+/*form styling*/
+#form {
+
+    margin-left: auto; 
+    margin-right: auto;
+    width: 435px;
+    height: 300px;
+    float: left;
+    text-align: right;
+}
+
+/*slider styling*/
+#sliders {
+    margin-left: auto; 
+    margin-right: auto;
+    width: 200px;
+    height: 300px;
+    float: left;
+}
+
+#h1Slider, #h2Slider, #v1Slider, #v2Slider {
+    width: 70%;
+    margin-bottom: 40px;
+    margin-top: 30px;
+    margin-left: 30px;
+    position: relative;
+    
+}
+
+/*tab styling*/
+#myTabs {
+    margin: 20px;
+    position: relative;
+    display: inline;
+    width: auto;
+    text-align: center;
+    font: bold 11px Verdana;
+    float: left;
+
+}

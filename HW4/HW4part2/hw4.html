@@ -1,0 +1,264 @@
+<!--
+File: hw4.html
+GUI Assignment: Using the jQuery Plugin/UI with Your Dynamic Table
+Laura Cahill, UMass Lowell Computer Science, laura_cahill@student.uml.edu
+Copyright (c) 2025 by Laura. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by LC on June 19, 2025 at 2:09 PM
+
+This page can be used to dynamically create a multiplication table from
+user inputed access bounds. For HW4 it was updated to include jquery
+validation, and now sliders, tabs, and a dynamically changing table.
+
+Sources used:
+for HW3:
+https://www.w3schools.com/html/html_forms.asp
+https://www.w3schools.com/tags/att_input_type_number.asp
+https://www.w3schools.com/js/js_htmldom_html.asp
+https://www.w3schools.com/jsref/met_table_insertrow.asp
+https://www.w3schools.com/css/css_table_style.asp
+
+for HW 4 part 1:
+https://jqueryvalidation.org/validate/
+https://www.youtube.com/watch?v=yaxUV3Ib4vM
+https://jqueryvalidation.org/min-method/
+
+part2:
+https://jesseheines.com/~heines/91.461/91.461-2015-16f/461-assn/jQueryUI1.8_Ch06_SliderWidget.pdf
+https://api.jqueryui.com/slider/#event-change
+https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+https://www.w3schools.com/jsref/event_oninput.asp
+https://api.jqueryui.com/1.11/tabs/
+https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Overflow
+https://www.w3schools.com/tags/tag_button.asp
+https://www.w3schools.com/jsref/met_element_remove.asp
+https://stackoverflow.com/questions/18295673/javascript-find-li-index-within-ul
+https://www.w3schools.com/jquery/jquery_dom_remove.asp
+https://www.w3schools.com/tags/att_input_type_checkbox.asp
+https://stackoverflow.com/questions/6049430/how-to-make-a-checkbox-without-a-form
+https://www.w3schools.com/jsref/dom_obj_checkbox.asp
+
+
+-->
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+
+  <!-- website set up and setting up the script and styling -->
+    <title>Multiplication Table</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"> </script>
+    <script src="./js/script.js"> </script>
+
+
+  </head>
+
+  <body>
+
+  
+    <h1>Please Enter Multiplication Table Values</h1>
+  <!--  Form html is under here, is validated using jquery upon user hitting 
+    the button. h1 and h2 control the horizontal axis and v1 and
+    v2 control the vertical axis -->
+    <div id = "form">
+      <form id ="myForm" name="myForm" method="post">
+        <label for="h1">Minimum column number (between -50 and 50):</label> 
+        <input type="number" id="h1" name="h1" min="-50" max="50" value="0" required> <br>
+
+        <label for="h2">Maximum column number (between -50 and 50):</label> 
+        <input type="number" id="h2" name="h2"  min="-50" max="50" value="0" required> <br>
+
+        <label for="v1">Minimum row number (between -50 and 50):</label> 
+        <input type="number" id="v1" name="v1"  min="-50" max="50" value="0" required> <br>
+
+        <label for="v2">Maximum row number (between -50 and 50):</label> 
+        <input type="number" id="v2" name="v2"  min="-50" max="50" value="0" required> <br>
+
+        <input type="submit" value = "Save Table">
+      </form> 
+
+    <script>
+
+      $(document).ready(function() {
+          $("#myForm").validate({
+            
+            //These rules make sure the maximum values can't be below the minimum. I don't know why, but
+            //it doesnt work unless it's a function.
+            rules: {
+              h2: { min: function() { return parseInt(document.forms["myForm"]["h1"].value)} },
+              v2: { min: function() { return parseInt(document.forms["myForm"]["v1"].value)} }
+            },
+            //if valid, runs saveTable() function and displays the new table in a new tab
+            submitHandler: function(form) { 
+              saveTable();
+             }
+
+          });
+
+      });
+      </script>
+    </div>
+
+
+
+    <!-- All the slider code goes here, first creating a div container for it, then initializating it.
+     For each slider, they change the input section upon slidign and changing, and also call changeTable()
+     which makes the display table change dynamically. 
+     It needs to be called during change as well, as when
+     I tried using just the slide property, it wouldn't capture its final value and the table wouldn't be
+     the same as the inputs and wouldn't save the same. -->
+  <div id = "sliders">
+    <div id="h1Slider"></div>
+    <div id="h2Slider"></div>
+    <div id="v1Slider"></div>
+    <div id="v2Slider"></div>
+    <script>
+        (function($){
+
+          $( "#h1Slider" ).slider({
+              min: -50,
+              max: 50,
+              value: 0,
+
+            slide: function() {
+              document.forms["myForm"]["h1"].value =  $( "#h1Slider" ).slider( "value" );
+              changeTable()
+            },
+            change: function() {
+              document.forms["myForm"]["h1"].value =  $( "#h1Slider" ).slider( "value" );
+              changeTable()
+            }
+
+          });
+        })(jQuery);
+    </script>
+
+    <script>
+         (function($){
+
+              $( "#h2Slider" ).slider({
+                  min: -50,
+                  max: 50,
+                  value: 0,
+            slide: function() {
+              document.forms["myForm"]["h2"].value =  $( "#h2Slider" ).slider( "value" );
+              changeTable()
+            },
+            change: function() {
+              document.forms["myForm"]["h2"].value =  $( "#h2Slider" ).slider("value" );
+              changeTable()
+            }
+
+          });
+        })(jQuery);
+    </script>
+
+      <script>
+        (function($){
+
+             $( "#v1Slider" ).slider({
+                 min: -50,
+                 max: 50,
+                 value: 0,
+            slide: function() {
+              document.forms["myForm"]["v1"].value =  $( "#v1Slider" ).slider("value");
+              changeTable()
+            },
+            change: function() {
+              document.forms["myForm"]["v1"].value =  $( "#v1Slider" ).slider("value");
+              changeTable()
+            }
+
+          });
+        })(jQuery);
+   </script>
+
+    <script>
+      (function($){
+
+           $( "#v2Slider" ).slider({
+               min: -50,
+               max: 50,
+               value: 0,
+            slide: function() {
+
+              document.forms["myForm"]["v2"].value =  $( "#v2Slider" ).slider("value");
+              changeTable()
+            },
+            change: function() {
+              document.forms["myForm"]["v2"].value =  $( "#v2Slider" ).slider("value");
+              changeTable()
+            }
+
+          });
+        })(jQuery);
+ </script>
+  </div>
+  <!-- ---------------------------------------------------------------------------------- -->
+
+  <!-- This is an empty container to hold the preview table when it's generated -->
+  
+    <div id = "mainTable">
+    </div>
+
+
+  <!-- Empty container initalized as a tabs widget to be added to dynamically via js-->
+    <div id="myTabs">
+
+      <ul id="tabTitles">
+      </ul>
+
+    </div>
+
+    <script>
+    (function($){
+    $("#myTabs").tabs();
+    })(jQuery);
+    </script>
+
+  </body>
+
+
+
+
+  <script>
+
+      //if this wasn't added, the sliders would be reset on a page refresh, but inputs wouldn't.
+      window.addEventListener('DOMContentLoaded', function() {
+        document.forms["myForm"]["h1"].value = 0;
+        document.forms["myForm"]["h2"].value = 0;
+        document.forms["myForm"]["v1"].value = 0;
+        document.forms["myForm"]["v2"].value = 0;
+      });
+
+
+    // puts text inputs immediately onto the slider and the main table
+    document.getElementById("h1").addEventListener("input", function() {
+      $( "#h1Slider" ).slider( "value", this.value );
+      changeTable()
+    });
+    document.getElementById("h2").addEventListener("input", function() {
+      $( "#h2Slider" ).slider( "value", this.value );
+      changeTable()
+    });
+    document.getElementById("v1").addEventListener("input", function() {
+      $( "#v1Slider" ).slider( "value", this.value );
+      changeTable()
+    });
+    document.getElementById("v2").addEventListener("input", function() {
+      $( "#v2Slider" ).slider( "value", this.value );
+      changeTable()
+    });
+
+
+  </script>
+
+</html>
