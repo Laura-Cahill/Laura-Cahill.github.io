@@ -1,0 +1,101 @@
+<!-- 
+File: scrabble.html
+GUI Assignment: Implementing a Bit of Scrabble with Drag-and-Drop
+Laura Cahill, UMass Lowell Computer Science, laura_cahill@student.uml.edu
+Copyright (c) 2025 by Laura. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by LC on June 30, 2025 at 5:27 PM
+
+This page has an interactive one-line scrabble game, which counts up the score
+and can be reset whenever the user wishes.
+
+Sources used:
+https://www.w3schools.com/html/html_classes.asp 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
+https://www.w3schools.com/jquery/event_ready.asp
+https://api.jquery.com/each/
+learn.jquery.com/using-jquery-core/jquery-object/
+https://api.jqueryui.com/droppable/
+https://www.geeksforgeeks.org/jquery-ui-draggable-and-droppable-methods/
+https://www.w3schools.com/tags/tag_span.asp
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- website set up and setting up the script and styling -->
+    <title>Scrabble Tile Game</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="./style/style.css" rel="stylesheet">
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="./script/script.js"></script>
+
+</head>
+
+<body>
+
+    <!--title-->
+    <h1>Scrabble Tile Game</h1>
+    
+    <!-- most of this stuff is done in script.js-->
+    <div class="game-container">
+
+        <!-- the board line above the rack -->
+        <div class="scrabble-board" id="board">
+            <div class="board-line">
+
+                <!-- the board spaces container and each of the objects themselves-->
+                <div class="board-spaces">
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space double-word"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space double-letter"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space double-letter"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space double-word"></div>
+                    <div class="board-space"></div>
+                    <div class="board-space"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        <!--empty tile rack to add to later-->
+
+        <div class="tile-rack" id="tile-rack">
+        </div>
+        
+
+        <!--buttons-->
+
+        <div class="controls">
+            <button id="draw-tiles">Draw New Tiles</button>
+            <button id="reset-game">Reset Game</button>
+        </div>
+
+
+        <!--score-->
+
+        <h1 class="score-display">Total Score: <span id="current-score">0</span></h1>
+
+    </div>
+
+
+</body>
+
+</html>
+

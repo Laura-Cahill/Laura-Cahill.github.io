@@ -1,0 +1,109 @@
+/* 
+File: style.css
+GUI Assignment: Implementing a Bit of Scrabble with Drag-and-Drop
+Laura Cahill, UMass Lowell Computer Science, laura_cahill@student.uml.edu
+Copyright (c) 2025 by Laura. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by LC on June 30, 2025 at 5:27 PM
+
+This page has an interactive one-line scrabble game, which counts up the score
+and can be reset whenever the user wishes.
+
+Sources used:
+https://www.w3schools.com/cssref/pr_background-image.php 
+https://www.w3schools.com/cssref/css3_pr_background-size.php*/
+
+
+
+/*body and main container styling*/
+body {
+    font-family: Arial;
+    text-align: center;
+    background-color: #feeeee;
+}
+
+
+.game-container {
+    max-width: 1200px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+}
+
+
+/*board styling*/
+.scrabble-board {
+    margin: 20px auto;
+    height: 80px;
+    width: 1129px;
+    position: relative;
+    background-image: url("../graphics_data/Scrabble_Board_OneLine.png");
+}
+
+.board-spaces {
+    position: absolute;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.board-space {
+    float: left;
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    width: 6.66%;
+    height: 90%;
+}
+
+
+/* tile rack and tile styling */
+.tile-rack {
+    width:600px;
+    height:100px;
+    margin: auto;
+    background-image: url("../graphics_data/scrabble-tile-holder-406774_640.png");
+    background-repeat: no-repeat;
+    background-size: 600px 100px;
+    background-position: center;
+    border-radius: 5px;
+    position: relative;
+}
+
+.scrabble-tile {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: move;
+    position: relative;
+    user-select: none;
+    z-index: 100;
+    margin: 0 auto;
+    display: inline-block;
+    margin: 5px;
+}
+
+
+
+/*button styling*/
+button {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 10px;
+    background-color: #7d9cc7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #f7a0aa;
+}
+
+
+
