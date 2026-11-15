@@ -1,0 +1,91 @@
+<!doctype html>
+<!--
+  Picture Cube - index.html
+  Edit log:
+    v1  first version: CDE style window, control panel, 3D stage
+    v2  controls help updated for live drag turns, orbit, zoom, view reset
+    v3  Auto-solve button
+    v4  Open puzzle file replaces the folder picker; cube size shown, set by the
+        puzzle; faces menu and New image removed; Save result button
+    v5  Auto-solve button removed; Reset spans the row
+    v6  Reset goes back to the starting scramble (behavior in cube.js)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Picture Cube</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="window">
+  <header class="titlebar">
+    <span class="tb-btn tb-menu" aria-hidden="true"></span>
+    <h1>Picture Cube</h1>
+    <span class="tb-btn tb-min" aria-hidden="true"></span>
+    <span class="tb-btn tb-max" aria-hidden="true"></span>
+  </header>
+
+  <div class="body">
+    <aside class="panel">
+      <fieldset>
+        <legend>Puzzle file</legend>
+        <button id="pick" class="wide">Open puzzle file</button>
+        <input type="file" id="picker" accept=".txt,text/plain" hidden>
+        <p id="fileinfo" class="note">No puzzle open</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Puzzle</legend>
+        <div class="readouts">
+          <span>Cube size</span><output id="sizeOut" class="readout">-</output>
+        </div>
+        <div class="row">
+          <button id="scramble">Scramble</button>
+          <button id="undo">Undo</button>
+        </div>
+        <button id="reset" class="wide">Reset</button>
+        <button id="save" class="wide" hidden>Save result</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Progress</legend>
+        <div class="readouts">
+          <span>Moves</span><output id="moves" class="readout">0</output>
+          <span>Time</span><output id="time" class="readout">0:00.0</output>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Target</legend>
+        <div id="thumbs" class="thumbs one"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Controls</legend>
+        <dl class="keys">
+          <dt>Drag a sticker</dt><dd>Turn its layer; let go to snap</dd>
+          <dt>Right drag</dt><dd>Look around (also Shift drag, background drag, or arrow keys)</dd>
+          <dt>Wheel</dt><dd>Zoom (or <kbd>+</kbd> <kbd>-</kbd>)</dd>
+          <dt>Double click</dt><dd>Background resets the view (or <kbd>Home</kbd>)</dd>
+          <dt><kbd>U</kbd><kbd>D</kbd><kbd>L</kbd><kbd>R</kbd><kbd>F</kbd><kbd>B</kbd></dt><dd>Turn a face clockwise, add Shift to reverse</dd>
+          <dt><kbd>2</kbd> to <kbd>9</kbd></dt><dd>Press before a face key to turn a deeper layer</dd>
+          <dt><kbd>Ctrl</kbd><kbd>Z</kbd></dt><dd>Undo</dd>
+        </dl>
+      </fieldset>
+    </aside>
+
+    <main id="stage" tabindex="0" aria-label="Cube. Drag a sticker to turn its layer, right drag to look around, wheel to zoom.">
+      <div id="cube"></div>
+      <div id="empty">
+        <p>Open a puzzle file to start.</p>
+        <p class="small">A puzzle file is a .txt file that starts with PCUBE1. It is read on this computer only; nothing is uploaded.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer id="status" role="status">Ready.</footer>
+</div>
+<script src="cube.js"></script>
+</body>
+</html>
