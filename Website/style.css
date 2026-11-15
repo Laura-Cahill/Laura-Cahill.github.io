@@ -1,0 +1,183 @@
+/* Edit log:
+   v1 (2026-11-14) first version: CDE/Motif palette, bevels, scope, LED meter, dials
+   v2 (2026-11-14) .msg line for datafile load messages
+   v3 (2026-11-14) picture window (.grille canvas, .hasimg)
+   v4 (2026-11-14) Colors moved to CSS variables; wizard theme (body[data-theme="wizard"])
+   v5 (2026-11-14) Wizard theme moved out to theme.wizard.css; this file is the built-in default theme
+   v6 (2026-11-14) .bglayers (background layers behind the scope), hidden by default; themes can show them
+*/
+:root {
+  --face: #aeb2c3;
+  --hi: #e6e8f0;
+  --lo: #5c6074;
+  --deep: #33364a;
+  --ink: #101223;
+  --accent: #6b7aa8;
+  --page: #5a6a86;
+  --title-ink: #ffffff;
+  --knob-hi: #d8dae6;
+  --knob-lo: #8f93a8;
+  --led-on: #6dff9a;
+  --grille-a: #33364a;
+  --grille-b: #5c6074;
+  --scope-bg: #06130c;
+  --scope-grid: rgba(90, 220, 130, 0.16);
+  --scope-grid-major: rgba(90, 220, 130, 0.40);
+  --trace-mine: #6dff9a;
+  --trace-target: #e6b440;
+  --static: rgba(170, 255, 190, 0.45);
+  --font: "DejaVu Sans", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--page);
+  color: var(--ink);
+  font: 14px/1.35 var(--font);
+}
+.radio {
+  width: min(900px, 100%);
+  background: var(--face);
+  border: 3px solid;
+  border-color: var(--hi) var(--deep) var(--deep) var(--hi);
+  box-shadow: 0 0 0 1px var(--ink), 5px 5px 0 rgba(0, 0, 0, 0.35);
+}
+.titlebar {
+  background: var(--accent);
+  color: var(--title-ink);
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-bottom: 2px solid var(--deep);
+}
+
+.top { display: flex; gap: 12px; padding: 12px; }
+.grille {
+  flex: 0 0 22%;
+  border: 3px solid;
+  border-color: var(--deep) var(--hi) var(--hi) var(--deep);
+  background: repeating-linear-gradient(90deg, var(--grille-a) 0 3px, var(--grille-b) 3px 9px);
+}
+.grille { position: relative; }
+.grille canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.grille.hasimg { flex: 0 0 260px; background: #14161f; }
+.scopewrap {
+  position: relative;
+  flex: 1;
+  border: 3px solid;
+  border-color: var(--deep) var(--hi) var(--hi) var(--deep);
+  background: var(--scope-bg);
+}
+/* Decorative layers behind the scope. A theme.css can show and animate them. */
+.bglayers { display: none; }
+#scope { display: block; width: 100%; height: 260px; }
+#banner {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 22px;
+  text-align: center;
+  background: var(--face);
+  border: 3px solid;
+  border-color: var(--hi) var(--deep) var(--deep) var(--hi);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+#banner[hidden] { display: none; }
+#banner strong { font-size: 18px; letter-spacing: 0.08em; }
+
+.meter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 4px 12px 10px;
+}
+.mlabel { font-weight: bold; letter-spacing: 0.06em; }
+.leds {
+  display: flex; gap: 3px; padding: 4px;
+  border: 2px solid;
+  border-color: var(--deep) var(--hi) var(--hi) var(--deep);
+  background: #14161f;
+}
+.leds span { width: 18px; height: 14px; background: #2a3a2e; }
+.leds span.lit { background: var(--led-on); box-shadow: 0 0 6px var(--led-on); }
+.pct { min-width: 3.2em; font: bold 14px monospace; }
+.lamp { display: inline-flex; align-items: center; gap: 6px; font-weight: bold; letter-spacing: 0.05em; }
+.lamp i {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #4a2a2a; border: 2px solid var(--deep);
+}
+.lamp.on i { background: #ffd24a; box-shadow: 0 0 8px #ffd24a; }
+.legend { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+
+.dials { padding: 4px 12px 8px; display: flex; flex-direction: column; gap: 10px; }
+.wave {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 8px 12px;
+  border: 2px solid;
+  border-color: var(--deep) var(--hi) var(--hi) var(--deep);
+}
+.wavelabel { min-width: 70px; white-space: nowrap; font-weight: bold; letter-spacing: 0.06em; }
+.dialbox { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.dlabel { font-weight: bold; font-size: 12px; letter-spacing: 0.08em; }
+.readout { display: none; font: 11px monospace; min-height: 14px; }
+body.easy .readout { display: block; }
+
+.dial {
+  position: relative;
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+  user-select: none;
+}
+.dial:active { cursor: grabbing; }
+.dial:focus-visible { box-shadow: 0 0 0 3px var(--accent); }
+.dial svg { color: var(--ink); position: absolute; inset: 0; width: 100%; height: 100%; }
+.knob {
+  position: absolute; inset: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--knob-hi), var(--knob-lo) 70%);
+  border: 2px solid;
+  border-color: var(--hi) var(--deep) var(--deep) var(--hi);
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.4);
+}
+.mark {
+  position: absolute; left: 50%; top: 3px;
+  width: 4px; height: 14px; margin-left: -2px;
+  background: var(--ink);
+}
+
+.controls { padding: 4px 12px 8px; display: flex; flex-direction: column; gap: 8px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+button, select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--face);
+  padding: 4px 12px;
+  border: 2px solid;
+  border-color: var(--hi) var(--deep) var(--deep) var(--hi);
+  cursor: pointer;
+}
+button:active { border-color: var(--deep) var(--hi) var(--hi) var(--deep); }
+label { display: inline-flex; align-items: center; gap: 6px; }
+.help { margin: 0; font-size: 12px; color: var(--deep); }
+.msg { margin: 0; min-height: 1.35em; font-size: 12px; font-weight: bold; }
+
+.status {
+  display: flex; gap: 22px; padding: 5px 12px;
+  border-top: 2px solid var(--lo);
+  background: var(--face);
+}
+
+@media (max-width: 640px) {
+  .top { flex-direction: column; }
+  .grille { flex: 0 0 28px; }
+  .legend { margin-left: 0; }
+}
